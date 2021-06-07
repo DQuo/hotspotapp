@@ -1,21 +1,37 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { View, StyleSheet, Platform } from 'react-native';
+import Constants from 'expo-constants';
 
+// Imports: Screen Components
+import Feed from './screens/Feed';
+
+
+// Root Component: <App />
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+      <Feed style={styles.feed} />
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+const platformVersion = (Platform.OS === 'ios') ? (
+  parseInt(Platform.Version, 10)
+) : (
+  Platform.Version
+);
+
+const styles = StyleSheet.create(
+  {
+    container: {
+      flex: 1,
+      backgroundColor: '#fff',
+      marginTop: Constants.statusBarHeight
+    },
+
+    feed: {
+      flex: 1,
+      marginTop: Platform.OS === 'android' || platformVersion < 11 ? Constants.statusBarHeight : 0,
+    }
+  }
+)
